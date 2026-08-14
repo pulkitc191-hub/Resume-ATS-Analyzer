@@ -1,0 +1,363 @@
+/* ═══════════════════════════════════════════════════════════
+   RESUME AI — LOGIN PAGE  |  Career-Themed Premium Light
+   ═══════════════════════════════════════════════════════════ */
+
+.container {
+    background: #fafbff;
+    color: #0f172a;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ── Background blobs ── */
+.container::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(ellipse, #c4b5fd 0%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0.25;
+    pointer-events: none;
+}
+
+.container::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 320px; height: 320px;
+    background: radial-gradient(ellipse, #fde68a 0%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+/* dot grid */
+.container {
+    background-image: radial-gradient(#c7d2fe 1px, transparent 1px);
+    background-size: 28px 28px;
+    background-color: #fafbff;
+}
+
+/* ═══════════════════
+   NAVBAR
+═══════════════════ */
+.nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    height: 66px;
+    display: flex;
+    align-items: center;
+    padding: 0 56px;
+    background: rgba(250, 251, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(99,102,241,0.12);
+}
+
+.navLogo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.logoMark {
+    display: flex;
+    align-items: center;
+}
+
+.logoText {
+    font-size: 19px;
+    font-weight: 800;
+    color: #1e1b4b;
+    letter-spacing: -0.5px;
+}
+
+/* ═══════════════════
+   LOGIN CARD
+═══════════════════ */
+.logincontainer,
+.verifycontainer {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 36px;
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1.5px solid #e0e7ff;
+    box-shadow:
+        0 0 0 1px rgba(99,102,241,0.05),
+        0 12px 40px rgba(99,102,241,0.1),
+        0 2px 8px rgba(0,0,0,0.04);
+    width: 400px;
+    max-width: 94vw;
+    margin-top: 20px;
+    animation: riseUp 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes riseUp {
+    from { opacity: 0; transform: translateY(20px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Card top badge */
+.logincontainer::before,
+.verifycontainer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 60%; height: 3px;
+    background: linear-gradient(90deg, #6366f1, #a78bfa, #ec4899);
+    border-radius: 0 0 4px 4px;
+}
+
+.logincontainer h1,
+.verifycontainer h1 {
+    font-size: 24px;
+    font-weight: 900;
+    color: #0f172a;
+    text-align: center;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+}
+
+.logincontainer > p {
+    text-align: center;
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.verifycontainer p {
+    text-align: center;
+    font-size: 13px;
+    color: #64748b;
+    margin: 6px 0 0;
+    line-height: 1.65;
+}
+
+/* ── INPUTS ── */
+.logincontainerinput {
+    width: 100%;
+    border: 1.5px solid #e2e8f0;
+    margin: 7px 0;
+    padding: 12px 15px;
+    color: #0f172a;
+    font-size: 14px;
+    font-weight: 500;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    border-radius: 12px;
+    background: #f8fafc;
+    font-family: 'Inter', sans-serif;
+}
+
+.logincontainerinput::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+.logincontainerinput:focus {
+    outline: none;
+    border-color: #6366f1;
+    background: #fff;
+    box-shadow: 0 0 0 3.5px rgba(99,102,241,0.12);
+}
+
+/* ── PASSWORD ── */
+.passdiv {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid #e2e8f0;
+    margin: 7px 0;
+    border-radius: 12px;
+    background: #f8fafc;
+    padding-right: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.passdiv:focus-within {
+    border-color: #6366f1;
+    background: #fff;
+    box-shadow: 0 0 0 3.5px rgba(99,102,241,0.12);
+}
+
+.passdiv input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 12px 15px;
+    color: #0f172a;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    min-width: 0;
+}
+
+.passdiv input::placeholder { color: #94a3b8; font-weight: 400; }
+.passdiv input:focus { outline: none; }
+
+.passdiv i {
+    cursor: pointer;
+    color: #94a3b8;
+    font-size: 14px;
+    transition: color 0.15s;
+    padding: 4px;
+}
+
+.passdiv i:hover { color: #6366f1; }
+
+/* ── FORGOT PASS ── */
+.linkdis {
+    text-decoration: none;
+    align-self: flex-start;
+}
+
+.forgetpass {
+    font-size: 13px;
+    font-weight: 500;
+    color: #6366f1;
+    margin: 6px 0 0;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+
+.forgetpass:hover {
+    color: #4f46e5;
+    text-decoration: underline;
+}
+
+/* ── SUBMIT BUTTON ── */
+.logincontainerbutton,
+.verbtn {
+    width: 100%;
+    padding: 13px;
+    margin: 20px 0 12px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.22s;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 5px 18px rgba(99,102,241,0.35);
+}
+
+.verbtn {
+    width: auto;
+    padding: 13px 40px;
+    margin-top: 20px;
+    align-self: center;
+}
+
+.logincontainerbutton:hover:not(:disabled),
+.verbtn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(99,102,241,0.45);
+}
+
+.logincontainerbutton:active:not(:disabled),
+.verbtn:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+}
+
+.logincontainerbutton:disabled,
+.verbtn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* ── SWITCH TEXT ── */
+.logincontainerspan {
+    color: #6366f1;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+
+.logincontainerspan:hover {
+    color: #4f46e5;
+    text-decoration: underline;
+}
+
+/* ── DIVIDER ── */
+.ghr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #e0e7ff, transparent);
+    margin: 20px 0 0;
+}
+
+/* ═══════════════════
+   OTP VERIFY
+═══════════════════ */
+.verifycontainer {
+    align-items: center;
+}
+
+.otpcontainer {
+    display: flex;
+    gap: 8px;
+    margin: 24px 0 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.otpinp {
+    width: 50px;
+    height: 58px;
+    border: 1.5px solid #e0e7ff;
+    background: #f8fafc;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 800;
+    color: #0f172a;
+    border-radius: 12px;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+}
+
+.otpinp::placeholder {
+    color: #c7d2fe;
+    font-size: 20px;
+}
+
+.otpinp:focus {
+    outline: none;
+    border-color: #6366f1;
+    background: #fff;
+    box-shadow: 0 0 0 3.5px rgba(99,102,241,0.12);
+    transform: scale(1.05);
+}
+
+/* ═══════════════════
+   RESPONSIVE
+═══════════════════ */
+@media screen and (max-width: 480px) {
+    .nav { padding: 0 20px; }
+
+    .logincontainer,
+    .verifycontainer {
+        padding: 32px 22px;
+    }
+
+    .otpinp {
+        width: 40px;
+        height: 48px;
+        font-size: 20px;
+    }
+
+    .otpinp::placeholder { font-size: 16px; }
+}
