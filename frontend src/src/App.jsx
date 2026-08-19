@@ -1,10 +1,10 @@
-import Home from "./home/home.jsx";
+import Home from "./Home/Home.jsx";
 import Login from "./login/login.jsx";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useContext } from "react";
-import { AppContext } from "./appcontext.jsx";
+import { AppContext } from "./AppContext.jsx";
 import ForgotPassword from "./ForgotPassword/ForgotPassword.jsx";
 import Upload from "./upload/upload.jsx";
 import AnalysisReport from "./AnalysisReport/AnalysisReport.jsx";

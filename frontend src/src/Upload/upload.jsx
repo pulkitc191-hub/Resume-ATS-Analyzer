@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import Styles from "./upload.module.css";
 import { useContext } from "react";
-import { AppContext } from "../appcontext";
+import { AppContext } from "../AppContext";
 import { useNavigate, Link } from "react-router-dom";
 
 function Upload() {
