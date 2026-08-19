@@ -1,0 +1,7 @@
+.git
+.env
+target
+frontend src/node_modules
+frontend src/dist
+.vscode
+README.md

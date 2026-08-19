@@ -1,47 +1,37 @@
-import { createContext, useEffect, useState} from "react";
-import { toast } from "react-toastify";
+import { createContext, useEffect, useState } from "react";
 
-export const usercontext =createContext();
+// eslint-disable-next-line react-refresh/only-export-components
+export const AppContext = createContext(null);
 
-function Appcontext({children}){
-    const backendURL=`${window.location.protocol}//${window.location.host}/resumeAnalyser/entry/v1`
-    const serviceURL=`${window.location.protocol}//${window.location.host}/resumeAnalyserCore/service/v1`
-    const [islogged,setislogged]=useState(false)
-    const [isprevious,setisprevious]=useState(false)
-    const [username,setusername]=useState("")
-    const [isauthenticated,setisauthenticated]=useState(false)
+export default function AppContextProvider({ children }) {
+    const backendURL = "/resumeAnalyser/entry/v1";
+    const serviceURL = "/resumeAnalyserCore/service/v1";
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [hasPreviousReport, setHasPreviousReport] = useState(false);
+    const [userName, setUserName] = useState("");
+    const [isAuthChecked, setIsAuthChecked] = useState(false);
 
-
-   useEffect(() => {
-        fetch(`${serviceURL}/isValid`, { method: "post", credentials: 'include' }).then(response => {
-            if (response.ok) {
-                return response.json()
-                
-            }
-            else {
-                setisauthenticated(true)
-                return;
-            }
-        })
+    useEffect(() => {
+        fetch(`${serviceURL}/isValid`, { method: "POST", credentials: "include" })
+            .then(response => response.ok ? response.json() : null)
             .then(data => {
-                if (data != null) {
-                    setusername(data.username);
-                    setisprevious(data.isPrevious)
-                    setislogged(true)
-                    setisauthenticated(true)
+                if (data) {
+                    setUserName(data.username);
+                    setHasPreviousReport(data.isPrevious);
+                    setIsLoggedIn(true);
                 }
-            }).catch(error=> setisauthenticated(true))
-
-    }, [])
-
-
-    const arr ={islogged,setislogged,isprevious,setisprevious,username,setusername,backendURL,serviceURL,isauthenticated}
+            })
+            .catch(() => undefined)
+            .finally(() => setIsAuthChecked(true));
+    }, []);
 
     return (
-        <usercontext.Provider value={arr}>
+        <AppContext.Provider value={{
+            backendURL, serviceURL, isLoggedIn, setIsLoggedIn,
+            hasPreviousReport, setHasPreviousReport, userName, setUserName,
+            isAuthChecked,
+        }}>
             {children}
-        </usercontext.Provider>
-    )
+        </AppContext.Provider>
+    );
 }
-
-export default Appcontext

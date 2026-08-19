@@ -1,6 +1,6 @@
 import Styles from "./home.module.css";
 import { useContext, useEffect, useState } from "react";
-import { usercontext } from "../appcontext";
+import { AppContext } from "../appcontext";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -115,50 +115,50 @@ const CheckBadge = () => (
 
 function Home() {
     const navigate = useNavigate();
-    const { islogged, username, isprevious, serviceURL, setusername, setislogged, setisprevious } = useContext(usercontext);
-    const [isshow, setshow] = useState(false);
-    const [isloading, setisloading] = useState(false);
-    const [delloading, setdelloading] = useState(false);
+    const { isLoggedIn, userName, hasPreviousReport, serviceURL, setUserName, setIsLoggedIn, setHasPreviousReport } = useContext(AppContext);
+    const [isShow, setShow] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [delLoading, setDelLoading] = useState(false);
 
     useEffect(() => {
         const func = (event) => {
-            if (event.target.id !== "menu") setshow(false);
+            if (event.target.id !== "menu") setShow(false);
         };
         window.addEventListener("click", func);
         return () => window.removeEventListener("click", func);
     }, []);
 
     const logout = () => {
-        setisloading(true);
+        setIsLoading(true);
         fetch(`${serviceURL}/logout`, { method: "post", credentials: "include" })
             .then(r => {
                 if (r.ok) {
-                    setusername(""); setislogged(false); setisprevious(false);
+                    setUserName(""); setIsLoggedIn(false); setHasPreviousReport(false);
                     toast.success("Logged out successfully");
-                    setisloading(false); navigate("/login");
-                } else { toast.error("Unauthorised"); setisloading(false); }
+                    setIsLoading(false); navigate("/login");
+                } else { toast.error("Unauthorised"); setIsLoading(false); }
             })
-            .catch(() => { toast.error("Logout failed"); setisloading(false); });
+            .catch(() => { toast.error("Logout failed"); setIsLoading(false); });
     };
 
-    const confirmagain = () => { document.getElementById("confirmdivdel").style.display = "flex"; };
-    const closedeldiv = () => { document.getElementById("confirmdivdel").style.display = "none"; };
+    const confirmAgain = () => { document.getElementById("confirmdivdel").style.display = "flex"; };
+    const closeDelDiv = () => { document.getElementById("confirmdivdel").style.display = "none"; };
 
-    const delaccount = () => {
-        setdelloading(true);
+    const delAccount = () => {
+        setDelLoading(true);
         fetch(`${serviceURL}/deleteAccount`, { method: "post", credentials: "include" })
             .then(r => {
                 if (r.ok) {
-                    setislogged(false);
+                    setIsLoggedIn(false);
                     document.getElementById("confirmdivdel").style.display = "none";
-                    setdelloading(false); setusername(""); setisprevious(false);
+                    setDelLoading(false); setUserName(""); setHasPreviousReport(false);
                     navigate("/login"); toast.success("Account deleted");
-                } else { toast.error("Couldn't delete, try again!"); setdelloading(false); }
+                } else { toast.error("Couldn't delete, try again!"); setDelLoading(false); }
             })
-            .catch(() => { toast.error("Network Error"); setdelloading(false); });
+            .catch(() => { toast.error("Network Error"); setDelLoading(false); });
     };
 
-    const upnavigate = () => navigate(islogged ? "/uploaddoc" : "/login");
+    const upnavigate = () => navigate(isLoggedIn ? "/upload" : "/login");
 
     return (
         <div className={Styles.page}>
@@ -181,7 +181,7 @@ function Home() {
                 </div>
 
                 <div className={Styles.navActions}>
-                    {!islogged ? (
+                    {!isLoggedIn ? (
                         <>
                             <Link to="/login"><button className={Styles.btnGhost}>Log in</button></Link>
                             <button className={Styles.btnFill} onClick={upnavigate}>
@@ -190,8 +190,8 @@ function Home() {
                         </>
                     ) : (
                         <div className={Styles.profileWrap}>
-                            <h3 id="menu" onClick={() => setshow(p => !p)} className={Styles.avatar}>
-                                {username[0].toUpperCase()}
+                            <h3 id="menu" onClick={() => setShow(p => !p)} className={Styles.avatar}>
+                                {userName && userName.length > 0 ? userName[0].toUpperCase() : "U"}
                             </h3>
                         </div>
                     )}
@@ -199,17 +199,17 @@ function Home() {
             </nav>
 
             {/* ─ profile dropdown ─ */}
-            {isshow && islogged && (
+            {isShow && isLoggedIn && (
                 <div id="menu" className={Styles.dropdown}>
                     <div id="menu" className={Styles.dropHead}>
-                        <span id="menu" className={Styles.dropName}>{username}</span>
+                        <span id="menu" className={Styles.dropName}>{userName}</span>
                         <span id="menu" className={Styles.dropTag}>Free plan</span>
                     </div>
                     <hr id="menu" className={Styles.dropDivider} />
-                    <button id="menu" className={Styles.dropItem} onClick={logout} disabled={isloading}>
+                    <button id="menu" className={Styles.dropItem} onClick={logout} disabled={isLoading}>
                         <i id="menu" className="fa-solid fa-right-from-bracket"></i> Logout
                     </button>
-                    <button id="menu" className={`${Styles.dropItem} ${Styles.dropDanger}`} onClick={confirmagain} disabled={isloading}>
+                    <button id="menu" className={`${Styles.dropItem} ${Styles.dropDanger}`} onClick={confirmAgain} disabled={isLoading}>
                         <i id="menu" className="fa-solid fa-trash-can"></i> Delete account
                     </button>
                 </div>
@@ -260,15 +260,15 @@ function Home() {
                     </div>
 
                     <div className={Styles.heroCtas}>
-                        <button className={Styles.ctaPrimary} disabled={isloading} onClick={upnavigate}>
+                        <button className={Styles.ctaPrimary} disabled={isLoading} onClick={upnavigate}>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"
                                     stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                             Analyse My Resume
                         </button>
-                        {isprevious && (
-                            <button className={Styles.ctaSecondary} disabled={isloading} onClick={() => navigate("/analysereport")}>
+                        {hasPreviousReport && (
+                            <button className={Styles.ctaSecondary} disabled={isLoading} onClick={() => navigate("/analysereport")}>
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                                     <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                                         stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -323,10 +323,10 @@ function Home() {
                     <h3>Delete your account?</h3>
                     <p>This permanently removes all your data and analysis history. This action cannot be undone.</p>
                     <div className={Styles.modalBtns}>
-                        <button className={Styles.modalDel} disabled={delloading} onClick={delaccount}>
-                            {delloading ? "Deleting…" : "Yes, Delete"}
+                        <button className={Styles.modalDel} disabled={delLoading} onClick={delAccount}>
+                            {delLoading ? "Deleting…" : "Yes, Delete"}
                         </button>
-                        <button className={Styles.modalCancel} disabled={delloading} onClick={closedeldiv}>
+                        <button className={Styles.modalCancel} disabled={delLoading} onClick={closeDelDiv}>
                             Cancel
                         </button>
                     </div>

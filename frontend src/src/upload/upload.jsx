@@ -1,16 +1,17 @@
 import { toast } from "react-toastify";
 import Styles from "./upload.module.css";
 import { useContext } from "react";
-import { usercontext } from "../appcontext";
+import { AppContext } from "../appcontext";
 import { useNavigate, Link } from "react-router-dom";
 
-function Uploadpage() {
-    const { serviceURL } = useContext(usercontext);
+function Upload() {
+    const { serviceURL } = useContext(AppContext);
     const navigate = useNavigate();
 
-    const validate = () => {
-        var inp = document.getElementById("resume");
-        var file = inp.files[0];
+    const handleFileChange = () => {
+        const inp = document.getElementById("resume");
+        const file = inp.files[0];
+        const indication = document.getElementById("indication");
         if (!file) return;
 
         if (!['application/pdf',
@@ -18,28 +19,28 @@ function Uploadpage() {
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document'].includes(file.type)) {
             toast.error("Upload a resume in pdf/doc format ");
             inp.value = "";
-            document.getElementById("indication").textContent = "No file selected";
+            indication.textContent = "No file selected";
         }
         else if (file.size > 2 * 1024 * 1024) {
             toast.error("Upload a file less than 2MB");
             inp.value = "";
-            document.getElementById("indication").textContent = "No file selected";
+            indication.textContent = "No file selected";
         }
         else {
-            var str = file.name;
+            const str = file.name;
             if (str.length <= 25) {
-                document.getElementById("indication").textContent = str;
+                indication.textContent = str;
             }
             else {
-                document.getElementById("indication").textContent = str.substring(0, 15) + "..." + str.substring(str.length - 7, str.length);
+                indication.textContent = str.substring(0, 15) + "..." + str.substring(str.length - 7, str.length);
             }
         }
-    }
+    };
 
-    const analysedoc = (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-        var uploadform = document.getElementById("upform");
-        var formdata = new FormData(uploadform);
+        const uploadform = document.getElementById("upform");
+        const formdata = new FormData(uploadform);
         if (formdata.get("roles").trim() === "") {
             toast.warn("Role must not be empty");
             return;
@@ -70,7 +71,7 @@ function Uploadpage() {
                 toast.error("Network error");
                 document.getElementById("overlay").style.display = "none";
             });
-    }
+    };
 
     return (
         <div className={Styles.page}>
@@ -132,10 +133,10 @@ function Uploadpage() {
                                 <p>PDF or DOCX (max 2MB)</p>
                                 <span id="indication" className={Styles.fileIndication}>No file selected</span>
                             </label>
-                            <input type="file" name="file" onChange={validate} id="resume" hidden accept=".pdf,.doc,.docx" />
+                            <input type="file" name="file" onChange={handleFileChange} id="resume" hidden accept=".pdf,.doc,.docx" />
                         </div>
 
-                        <button onClick={analysedoc} className={Styles.btnPrimary}>
+                        <button onClick={handleSubmit} className={Styles.btnPrimary}>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                 <polygon points="5 3 19 12 5 21 5 3"></polygon>
                             </svg>
@@ -175,4 +176,4 @@ function Uploadpage() {
     );
 }
 
-export default Uploadpage;
+export default Upload;

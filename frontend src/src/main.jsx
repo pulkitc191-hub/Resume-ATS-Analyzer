@@ -19,11 +19,11 @@ if (!crypto.randomUUID) {
 
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
-import Appcontext from './appcontext.jsx'
+import AppContext from './appcontext.jsx'
 
 createRoot(document.getElementById('root')).render(
-    <Appcontext>
+    <AppContext>
     <App />
-    </Appcontext>
+    </AppContext>
  
 )

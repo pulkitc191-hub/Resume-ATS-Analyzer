@@ -1,28 +1,28 @@
 import Home from "./home/home.jsx";
 import Login from "./login/login.jsx";
-import "./App.css"
+import "./App.css";
 import { ToastContainer } from "react-toastify";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useContext } from "react";
-import { usercontext } from "./appcontext.jsx";
-import Forgotpassword from "./resetpassword/resetpassword.jsx";
-import Uploadpage from "./upload/upload.jsx";
-import Analyse from "./analyse/analyse.jsx";
-import Styles from "./loadstyle.module.css"
+import { AppContext } from "./appcontext.jsx";
+import ForgotPassword from "./ForgotPassword/ForgotPassword.jsx";
+import Upload from "./upload/upload.jsx";
+import AnalysisReport from "./AnalysisReport/AnalysisReport.jsx";
+import Styles from "./LoadingSpinner.module.css";
 
 function App() {
 
-  const { isauthenticated } = useContext(usercontext)
-  return (isauthenticated ?
+  const { isAuthChecked } = useContext(AppContext);
+  return (isAuthChecked ?
     <>
       <ToastContainer theme="dark" stacked autoClose={1500} />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/forgotpassword" element={<Forgotpassword />} />
-          <Route path="/uploaddoc" element={<Uploadpage />} />
-          <Route path="/analysereport" element={<Analyse />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/upload" element={<Upload />} />
+          <Route path="/analysereport" element={<AnalysisReport />} />
         </Routes>
       </BrowserRouter>
     </> : 
