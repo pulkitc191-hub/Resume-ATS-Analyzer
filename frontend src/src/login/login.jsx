@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import Styles from "./login.module.css";
+import Styles from "./Login.module.css";
 import { toast } from "react-toastify";
 import { AppContext } from "../appcontext";
 import { useNavigate, Link } from "react-router-dom";
