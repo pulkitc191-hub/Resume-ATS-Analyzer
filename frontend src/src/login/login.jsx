@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
-import Styles from "./Login.module.css";
+import Styles from "./login.module.css";
 import { toast } from "react-toastify";
-import { AppContext } from "../appcontext";
+import { AppContext } from "../appcontext.jsx"; 
 import { useNavigate, Link } from "react-router-dom";
 import GoogleSignInButton from "../GoogleSignInButton.jsx";
 
