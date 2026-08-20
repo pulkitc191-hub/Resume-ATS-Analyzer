@@ -49,6 +49,7 @@
     margin-top: 50px;
     background: linear-gradient(to right, #0061ff 0%, #60efffd1 30%, #0061ff 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     color: transparent;
     background-size: 200% auto;
     animation: colchange 5s linear infinite;
